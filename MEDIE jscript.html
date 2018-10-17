@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    
+    <style>
+    body
+        {
+        text-align: center;
+}
+        </style>
+        <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    </head>
+<body>
+    
+Numar note : <input type="text" name="nr" id="nr" >
+    
+    <button onclick="fct()" id="btn">ok
+    </button>
+    
+<br/>
+
+Materie cu teza  <input type="checkbox" id="myCheck" onclick="teza()">
+<span id="text" style="display:none">
+    
+    
+    Nota teza <input type="text" id="tezza">
+  
+    </span>
+
+<script>
+    function fct()
+    {
+        
+        var m = document.getElementById("nr").value;
+        if(m>0){
+            
+        var i;
+        for(i=0;i<m;i++)
+            {
+                myFunction((i+1));
+            }
+        document.getElementById("btn").onclick = null;
+            var btn = document.createElement("BUTTON");
+            var t = document.createTextNode("GO");
+             var br = document.createElement("br");
+            
+    btn.appendChild(t);
+            document.body.appendChild(br);
+            btn.onclick = submit;
+    document.body.appendChild(btn);
+    
+        console.log(m);
+        }
+    }
+function myFunction(data) {
+    
+    var bb = document.getElementById("text");
+    var x = document.createElement("INPUT");
+     var br = document.createElement("br");
+    x.setAttribute("type", "text");
+    x.name="input_"+data;
+   // x.setAttribute("value", data);
+    x.id=("nota_"+data);
+   
+  document.body.appendChild(br);
+     
+    document.body.appendChild(x);
+    document.body.appendChild(bb);
+    document.getElementById("nota_"+data).placeholder="nota "+data;
+      
+}
+    function teza()
+    {
+         var checkBox = document.getElementById("myCheck");
+  // Get the output text
+  var text = document.getElementById("text");
+
+  // If the checkbox is checked, display the output text
+  if (checkBox.checked == true){
+    text.style.display = "block";
+  } else {
+    text.style.display = "none";
+  }
+    }
+    var x = 1;
+     var sum = 0 , sum_2=0;   
+    function submit()
+    {
+         var checkBox = document.getElementById("myCheck");
+         var teza = document.getElementById("tezza").value;
+        
+            
+        
+        var number = nr.value;
+        
+        for(var i=0;i<number; i++)
+            {
+                sum+=  parseFloat(document.getElementById("nota_"+(i+1)).value);
+                sum_2+=  parseFloat(document.getElementById("nota_"+(i+1)).value);
+            }
+        if(checkBox.checked == false)
+            sum = parseFloat(sum/number);
+        else 
+            sum = (parseFloat(sum/number)*3 + parseFloat(teza))/4;
+        if(x==1)
+        {
+            
+            
+            
+            var div1 = document.createElement("div");
+        div1.id="dorit";
+        div1.innerHTML="Media este : ";
+            div1.innerHTML=div1.innerHTML+sum;
+            document.body.appendChild(div1);
+            x=0;
+            
+            
+            
+            
+            var meedie = document.createElement("label");
+            meedie.innerHTML = "Media dorita ";
+            document.body.appendChild(meedie);
+
+//Create array of options to be added
+var array = ["1","2","3","4","5","6","7","8","9","10"];
+
+//Create and append select list
+var selectList = document.createElement("select");
+selectList.id = "mySelect";
+document.body.appendChild(selectList);
+
+//Create and append the options
+for (var i = 0; i < array.length; i++) {
+    var option = document.createElement("option");
+    option.id="opt"+i;
+    option.value = array[i];
+    option.text = array[i];
+    selectList.appendChild(option);
+}
+     var btn1 = document.createElement("BUTTON");
+            var t1 = document.createTextNode("GO");
+ btn1.appendChild(t1);       
+            btn1.onclick = submitt;
+             document.body.appendChild(btn1);
+            
+            
+        }
+        
+    }
+
+    function submitt()
+    {
+        var singleValues = $( "#mySelect" ).val(); 
+        var checkBox = document.getElementById("myCheck");
+        console.log(singleValues);
+        if(Math.round(sum)<singleValues){
+        var ok = 1;
+        for(var i=1;i<=10;i++)
+        {
+            
+               
+            if (checkBox.checked == false)
+            var necesar = (parseFloat(sum_2)+parseFloat(i))/(parseFloat(nr.value)+parseFloat(1));
+            else var necesar = ((parseFloat(sum_2+parseFloat(i))/4)*3+parseFloat(i))/(parseFloat(nr.value)+parseFloat(1));
+           console.log(Math.round(necesar));
+            if(Math.round(necesar)>=singleValues)
+                {
+                    console.log("valoare gasita " +i);
+                    ok=0;
+                }
+        }
+       // console.log(necesar);
+        if(ok == 1)
+            alert("imposibil");
+        }
+        console.log("nu este necesara o marire");
+    }
+</script>
+
+</body>
+ 
+</html>
