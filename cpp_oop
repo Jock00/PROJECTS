@@ -1,0 +1,155 @@
+
+Conversație deschisă. Un mesaj citit.
+
+Treci la conținut
+Se folosește Gmail cu cititoare de ecran
+in:sent 
+Conversații
+Se utilizează 5,44 GB (36%) din 15 GB
+Administrează
+Condiții · Confidențialitate · Politici de produs
+Ultima activitate în cont: Acum 1 oră
+Detalii
+
+#include <iostream>
+#include <cmath>
+using namespace std;
+class complexx
+{
+    double re,im;
+public:
+    complexx()
+    {
+        re=0;
+        im=0;
+    }
+    complexx(const complexx &);
+    ~complexx(){}
+    complexx(double,double);
+    complexx operator + (const complexx &);
+    complexx operator - (const complexx &);
+    complexx operator = (const complexx &);
+    complexx operator * (const complexx &);
+    complexx operator / (const complexx &);
+    void afis();
+    void set_real(double);
+    void set_imag(double);
+    double get_real();
+    double get_imag();
+    complexx radical();
+    double modul();
+        friend ostream& operator<< (ostream& c, const complexx& x)
+    {
+        c<<x.re;
+        if(x.im>0)
+            c<<"+"<<x.im<<"i";
+        else if(x.im<0)
+            c<<x.im<<"i";
+    }
+};
+complexx::complexx(const complexx &x)
+{
+    this->re=x.re;
+    this->im=x.im;
+ //   return this;
+}
+complexx::complexx(double x,double y)
+{
+
+    this->re=x;
+    this->im=y;
+}
+void complexx::afis()
+{
+    cout<<this->re<<" "<<this->im<<endl;
+}
+  complexx complexx::operator = (const complexx &x)
+    {
+        this->re=x.re;
+        this->im=x.im;
+       // return this;
+    }
+    complexx complexx::operator /(const complexx &x)
+{
+    complexx y;
+    y.re=this->re/x.re;
+    y.im=this->im/x.im;
+    return y;
+}
+
+complexx complexx::operator -(const complexx &x)
+{
+    complexx y;
+    y.re=this->re-x.re;
+    y.im=this->im-x.im;
+    return y;
+}
+
+complexx complexx::operator +(const complexx &x)
+{
+    complexx y;
+    y.re=this->re+x.re;
+    y.im=this->im+x.im;
+    return y;
+}
+
+complexx complexx::operator *(const complexx &x)
+{
+    complexx y;
+    y.re=this->re*x.re;
+    y.im=this->im*x.im;
+    return y;
+}
+void complexx::set_imag(double x)
+{
+    this->im=x;
+}
+void complexx::set_real(double x)
+{
+    this->re=x;
+}
+double complexx::get_real()
+{
+    return this->re;
+}
+double complexx::get_imag()
+{
+    return this->im;
+}
+double complexx::modul()
+{
+    return sqrt(this->re*this->re+this->im*this->im);
+}
+complexx complexx::radical()
+{
+        double x=this->modul();
+      //  this->re=this->re+x;
+        complexx k;
+        k.set_imag(this->im);
+        k.set_real(this->re+x);
+        double y=k.modul();
+        k.set_real(k.get_real()*sqrt(x));
+        k.set_imag(k.get_imag()/y);
+        k.set_real(k.get_real()/y);
+        return k;
+
+}
+int main()
+{
+    complexx a(1,2);
+  //  x.afis();
+    complexx b(2,3);
+  //  y.afis();
+    complexx c(1,3);
+    complexx inmultire_cu_4(4,4);
+    complexx inmultire_cu_2(2,2);
+    complexx inmultire_cu_1(-1,-1);
+    complexx delta;
+    delta=b*b-inmultire_cu_4*a*c;
+    cout<<(inmultire_cu_1*b+delta)/(a*inmultire_cu_2);
+    cout<<endl<<(inmultire_cu_1*b-delta)/(a*inmultire_cu_2);
+  //  cout << "Hello world!" << endl;
+    return 0;
+}
+tema_1_cpp.txt
+Se afișează tema_1_cpp.txt.
