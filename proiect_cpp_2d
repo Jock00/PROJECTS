@@ -1,0 +1,537 @@
+
+Conversație deschisă. Un mesaj citit.
+
+Treci la conținut
+Se folosește Gmail cu cititoare de ecran
+in:sent 
+Conversații
+Se utilizează 5,44 GB (36%) din 15 GB
+Administrează
+Condiții · Confidențialitate · Politici de produs
+Ultima activitate în cont: Acum 1 oră
+Detalii
+
+#include <GL/glut.h>
+#include <stdio.h>
+#include <iostream>
+#include <Windows.h>
+#include <stdlib.h>     
+#include <time.h> 
+#include <string>
+#include <fstream>
+using namespace std;
+ifstream f("date.txt");
+
+int max_score=0;
+
+void init(void)  // initializare fereastra de vizualizare
+{
+	glClearColor(0, 0, 0, 0.0); // precizeaza culoarea de fond a ferestrei de vizualizare
+
+	glMatrixMode(GL_PROJECTION);  // se precizeaza este vorba de o reprezentare 2D, realizata prin proiectie ortogonala
+	gluOrtho2D(0.0, 800.0, 0.0, 600.0); // sunt indicate coordonatele extreme ale ferestrei de vizualizare
+}
+int linie, btn;
+int kk;
+int color=1;
+struct pozitie
+{
+	float x, y;
+};
+pozitie locomotiva;
+int k = 0;
+void print(int x, int y, string string1)
+{
+	//set the position of the text in the window using the x and y coordinates
+	glRasterPos2f(x, y);
+	//get the length of the string to display
+	int skra = string1.length();
+
+	//loop to display character by character
+	for (int i = 0; i < skra; i++)
+	{
+		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, string1[i]);
+	}
+};
+void print_nr(int x, int y, int nr)
+{
+	//set the position of the text in the window using the x and y coordinates
+	glRasterPos2f(x, y);
+	//get the length of the string to display
+
+	//loop to display character by character
+
+		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, nr);
+	
+};
+int scor;
+int interfata;
+float speed=0;
+void text()
+{
+	print(300, 300, "mue");
+}
+int val;
+void moving()
+{
+	glClear(GL_COLOR_BUFFER_BIT);
+	glClearColor(0, 0, 0, 0.0);
+	glPushMatrix();
+	glTranslated(50+val, 0, 0);
+	//glRotated(2, 3, 0, 0);
+	print(100, 100, "kek");
+	glPopMatrix();
+	glFlush();
+}
+void display()
+{
+	glClearColor(0, 0, 0, 0.0);
+	if(interfata==4)
+	{
+		glClear(GL_COLOR_BUFFER_BIT);
+		glPushMatrix();
+		glColor3d(1, 1, 1);
+		glRecti(145, 340, 690, 375);
+		glRecti(295, 443, 550, 473);
+		glColor3d(1, 0, 1);
+		print(150, 350, "Use arrow keys to move.\nTo start press the red button");
+		
+		print(300, 450, "Press Esc key to go back");
+		glPopMatrix();
+		glFlush();
+	}
+	else
+	if (interfata == 0)
+	{
+		glClear(GL_COLOR_BUFFER_BIT);
+		//gluOrtho2D(0.0, 800.0, 0.0, 500.0);
+		//glClearColor(0, 1, 0, 0.0);
+		//glClear(GL_COLOR_BUFFER_BIT);
+		glPushMatrix();
+		glColor3d(1, 1, 1);
+		glRecti(297, 340, 487, 375);
+		glColor3d(1, 0, 1);
+
+		//glTranslated(50, -100,0);
+		
+		print(300, 350, "PRESS TO PLAY");
+		glColor3d(1, 1, 1);
+		glRecti(297, 290, 487, 325);
+		glColor3d(1, 0, 1);
+		print(300, 300, "INSTRUCTIONS");
+		
+		
+		glPopMatrix();
+		glFlush();
+
+	}
+	else
+	
+		if (interfata == 1) {
+			glClear(GL_COLOR_BUFFER_BIT);
+			print(100, 100, "Score : ");
+			
+			string s = to_string(scor);
+			print(180, 100, s);
+			print(100, 75, "Speed");
+			print(180, 75, to_string(speed * 50 + 10));
+			//s[4] = 0;
+			if (!color)
+				glColor3d(1, 0, 1); //1
+			else if (color == 1)
+				glColor3d(1, 1, 0);//2
+			else glColor3d(0, 1, 1);//3
+			glPushMatrix();
+			//glTranslated(100, 0, 0.0);
+			glEnable(GL_POINT_SMOOTH);
+			glPointSize(25);
+			glBegin(GL_POINTS);
+			glVertex2f(locomotiva.x, locomotiva.y);
+			glEnd();
+			glPopMatrix();
+			//glutSwapBuffers();
+
+
+
+
+
+			glPushMatrix();
+			glPointSize(14);
+			//glColor3d(0, 1, 1);
+			glLineWidth(7);
+			//glColor3d(0, 0, 0);
+			glBegin(GL_LINES);
+
+			glVertex2f(100, 300);
+			//glPushMatrix();
+			glVertex2f(300, 300);
+			glEnd();
+			glColor3d(1, 0, 1);//1
+			glBegin(GL_LINES);
+			glVertex2f(300, 300);
+			glVertex2f(450, 400);
+
+			glVertex2f(450, 400);
+			glVertex2f(550, 400);
+			glEnd();
+			glColor3d(1, 1, 0);//2
+			glBegin(GL_LINES);
+			glVertex2f(300, 300);
+			glVertex2f(550, 300);
+			glEnd();
+			glColor3d(0, 1, 1);//3
+			glBegin(GL_LINES);
+			glVertex2f(300, 300);
+			glVertex2f(450, 200);
+
+			glVertex2f(450, 200);
+			glVertex2f(550, 200);
+
+			glEnd();
+			glColor3f(0, 1, 0);
+			glEnable(GL_POINT_SMOOTH);
+			glPointSize(14);
+			glBegin(GL_POINTS);
+			glVertex2f(303, 300);
+			glEnd();
+			glColor3f(0, 0, 0);
+			glLineWidth(5);
+			//if(locomotiva.x<=300)
+			switch (linie)
+			{
+			case 0:
+				glColor3d(1, 0, 1);//1
+				glLineWidth(14);
+				glBegin(GL_LINES);
+				glVertex2f(300, 300);
+				glVertex2f(450, 400);
+
+				glVertex2f(450, 400);
+				glVertex2f(550, 400);
+				glEnd();
+				break;
+			case 1:
+
+				glLineWidth(14);
+				glColor3d(1, 1, 0);//2
+				glBegin(GL_LINES);
+				glVertex2f(300, 300);
+				glVertex2f(550, 300);
+				glEnd();
+				break;
+			case 2:
+				glLineWidth(14);
+				glColor3d(0, 1, 1);//3
+				glBegin(GL_LINES);
+				glVertex2f(300, 300);
+				glVertex2f(450, 200);
+
+				glVertex2f(450, 200);
+				glVertex2f(550, 200);
+				glEnd();
+				break;
+			default:break;
+			}
+
+			if (!btn)
+			{
+				glPointSize(14);
+				glColor3f(1, 0, 0);
+				glBegin(GL_POINTS);
+				glVertex2f(300, 300);
+				glEnd();
+				//btn =1;
+			}
+			else
+			{
+				glPointSize(14);
+				glColor3f(0, 1, 0);
+				glBegin(GL_POINTS);
+				glVertex2f(300, 300);
+				glEnd();
+			}
+			glDisable(GL_POINT_SMOOTH);
+			//glClear(GL_COLOR_BUFFER_BIT);
+
+			//glRecti(260, 50, 270, 80);
+			//glRecti(270, 50, 280, 60);
+			//glFlush(); 
+			//glPointSize(14);
+
+			glColor3f(0, 1, 0);
+
+			k += 5;
+			glPopMatrix();
+			//glTranslatef(2, 10, 0);
+
+			glutSwapBuffers();
+
+			glFlush();
+		}
+	
+	else if (interfata == 2)
+	{
+		//glutSwapBuffers();
+		//glPushMatrix();
+		glClear(GL_COLOR_BUFFER_BIT);
+		//glTranslated(1, 0, 0);
+		glColor3d(1, 0, 1);
+		
+		print(300, 350, "YOU LOST!!!!");
+		print(300, 300, "HIGHSCORE : ");
+		if (scor > max_score)
+			max_score = scor;
+		print(470, 300, to_string(max_score));
+		glColor3d(1, 1, 1);
+		glPushMatrix();
+		//glPushMatrix();
+
+		//glTranslated(1, 0, 0);
+		
+
+		//glutIdleFunc(text);
+		glRecti(300, 225, 460, 255);
+		
+		glColor3d(1, 0, 0);
+		
+		print(300, 230, "EXIT IN 5 SEC");
+		//Sleep(2000);
+	//	glTranslated(100, 200, 0);
+		glPopMatrix();
+
+
+
+
+
+
+		//glTranslated(0, 100, 0);
+
+
+
+
+
+
+		interfata = 0;
+
+
+
+
+
+
+
+
+
+
+
+
+
+		//glPopMatrix();
+		
+		glFlush();
+
+		Sleep(5000);
+	
+		ofstream g("date.txt");
+		
+		g << max_score;
+		g.close();
+		exit(0);
+	
+	}
+	glFlush();
+}
+
+void stay(void)
+{
+
+
+	glutPostRedisplay();
+}
+int ok = 0, x_linie;
+int directie;
+void move(void)
+{
+	if (locomotiva.x < 500)
+	{
+		if (locomotiva.x <= 300)
+			locomotiva.x += 0.2+speed;
+		else ok = 1;
+		if (locomotiva.x < 450)
+			if (linie == 0 && ok)
+			{
+				locomotiva.y = 100 + 1 + (2 * locomotiva.x) / 3;
+				locomotiva.x += 0.2+speed;
+			}
+			else
+				if (linie == 1 && ok)
+				{
+					//locomotiva.y = 100 + 1 + (2 * locomotiva.x) / 3;
+					locomotiva.x += 0.2+speed;
+				}
+				else
+				{
+					if (linie == 2 && ok)
+					{
+						locomotiva.y = 500 - (2 * locomotiva.x) / 3;
+						locomotiva.x += 0.2+speed;
+					}
+				}
+		else
+			locomotiva.x += 0.2+speed;
+	}
+	else
+	{
+		if (color != linie)
+		{
+			
+			//print(300, 300, "anretrn");
+			interfata = 2;
+
+			//return;
+			//kk = 1;
+		}
+		else
+		{
+			if(linie==color)
+			scor++;
+			if (scor % 3 == 0 && scor)
+				speed = speed + 0.05;
+			locomotiva.x = 105;
+			locomotiva.y = 309;
+			ok = 0;
+			color = rand() % 3;
+			directie = 0;
+		}
+	}
+	glutPostRedisplay();
+}
+
+void click(int button, int stare, int x, int y)
+{
+	if (button == GLUT_LEFT_BUTTON && stare == GLUT_DOWN)
+	{
+
+		if (x >= 290 && x <= 310 && y >= 290 && y <= 310)
+		{
+			if (btn)
+
+
+				glutIdleFunc(stay);
+			else
+				glutIdleFunc(move);
+
+			btn = !btn;
+		}
+		
+		//glRecti(297, 340, 487, 375);
+		x = 800 - x;
+		y = 600 - y;
+		if (interfata == 0) {
+			if (x >= 297 && x <= 487 && y >= 340 && y <= 375)
+			{
+				interfata = 1;
+				//cout << "da";
+				
+			}
+			//else 
+		}
+		//else cout << "x= " << x << " y= " << y << endl;
+		//glTranslated(0, -30, 0);
+		//glRecti(300, 225, 450, 255);
+		/*if (interfata == 2)
+		{
+			//cout << "AICIII";
+			if (x >= 300 && x <= 450 && y >= 225 && y <= 255)
+			{
+				glutSwapBuffers();
+				interfata = 0;
+				
+				//exit(0);
+					cout << x << " " << y << endl;// return;
+			}
+			}
+			*/
+		
+			//	if(!btn)
+			//glutIdleFunc(move);
+		
+	}
+
+	//glutPostRedisplay();
+}
+void SpecialInput(int key, int x, int y)
+{
+	if (locomotiva.x <= 300) 
+	switch (key)
+	{
+	case GLUT_KEY_DOWN:
+		if (linie < 2)
+			linie++;
+		break;
+	case GLUT_KEY_UP:
+		//interfata = 4;
+		if (linie > 0)
+			linie--;
+		
+		//do something here
+		break;
+	
+	default:
+		
+		break;
+	}
+
+	glutPostRedisplay();
+}
+void keyboard(unsigned char key, int x, int y)
+{
+	switch (key)
+	{
+	case 27:
+		interfata = 0;
+		break;
+	case 104:
+		interfata = 4;
+		break;
+	case 32:
+		if(interfata!=1)
+		interfata = 0;
+		
+		break;
+	default:
+		break;
+	}
+	glutPostRedisplay();
+}
+int main(int argc, char** argv)
+{
+	f >> max_score;
+	if (!max_score)
+		max_score = 0;
+	f.close();
+	srand(time(NULL));
+	locomotiva.x = 105;
+	locomotiva.y = 309;
+	glutInit(&argc, argv); // initializare GLUT
+	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB); // se utilizeaza un singur buffer | modul de colorare RedGreenBlue (= default)
+	glutInitWindowPosition(100, 100); // pozitia initiala a ferestrei de vizualizare (in coordonate ecran)
+	glutInitWindowSize(800, 600); // dimensiunile ferestrei 
+	glutCreateWindow("Get The Color"); // creeaza fereastra, indicand numele ferestrei de vizualizare - apare in partea superioara
+	init();
+	glClear(GL_COLOR_BUFFER_BIT);
+	glutDisplayFunc(display);
+	//glutSpecialFunc(tren);
+	glutKeyboardFunc(keyboard);
+	glutMouseFunc(click);
+	glutSpecialFunc(SpecialInput);
+	
+	//glutIdleFunc(tren);
+	//glutDisplayFunc(tren);
+	//if(!kk)
+	glutMainLoop();
+
+
+	return 0;
+}
+grafica_proiect.txt
+Se afișează grafica_proiect.txt.
