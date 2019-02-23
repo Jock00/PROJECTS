@@ -1,15 +1,4 @@
 
-Conversație deschisă. Un mesaj citit.
-
-Treci la conținut
-Se folosește Gmail cu cititoare de ecran
-in:sent 
-Conversații
-Se utilizează 5,44 GB (36%) din 15 GB
-Administrează
-Condiții · Confidențialitate · Politici de produs
-Ultima activitate în cont: Acum 1 oră
-Detalii
 
 #include <GL/glut.h>
 #include <stdio.h>
